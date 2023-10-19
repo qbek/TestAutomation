@@ -1,13 +1,10 @@
 package org.example.steps;
 
-import com.ibm.icu.util.StringTrieBuilder;
-import io.restassured.RestAssured;
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.annotations.Steps;
-import org.example.data.ProjectData;
-import org.hamcrest.Matchers;
+import org.example.data.model.ProjectData;
 
-import static io.restassured.http.ContentType.JSON;
+import static org.example.data.TestDataGenerator.createProject;
 
 public class ProjectSteps {
 
@@ -21,7 +18,7 @@ public class ProjectSteps {
 
     @Step
     public void userCreatesProject() {
-        project = new ProjectData("Moja nazwa projektu");
+        project = createProject();
         var response = client.postProjects(project.getName());
         verification.checkProjectDetails(response, project.getName());
         project.setId(response.then().extract().path("id"));
