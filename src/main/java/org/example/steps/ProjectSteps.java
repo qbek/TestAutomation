@@ -17,10 +17,13 @@ public class ProjectSteps {
     @Steps
     private ProjectVerification verification;
 
+    @Steps(shared = true)
+    private TestDataSteps testData;
+
     @Step
     public void userCreatesProject() {
         var project = createProject();
-        Serenity.setSessionVariable("projectData").to(project);
+        testData.setProjectData(project);
         var response = client.postProjects(project.getName());
         verification.checkProjectDetails(response, project.getName());
         project.setId(response.then().extract().path("id"));
@@ -28,14 +31,14 @@ public class ProjectSteps {
 
     @Step("User checks #projectId project details")
     public void userCheckProjectDetails() {
-        var project = (ProjectData) Serenity.sessionVariableCalled("projectData");
+        var project = testData.getProjectData();
         var response = client.getProjects(project.getId());
         verification.checkProjectDetails(response, project.getName());
     }
 
     @Step
     public void userChecksAllProjectsList() {
-        var project = (ProjectData) Serenity.sessionVariableCalled("projectData");
+        var project = testData.getProjectData();
         var response = client.getProjects();
         verification.checkAllProjectsList(response);
     };

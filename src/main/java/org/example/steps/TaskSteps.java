@@ -14,18 +14,21 @@ public class TaskSteps {
     @Steps
     TaskVerification verification;
 
-    private TaskData task;
+    @Steps(shared = true)
+    TestDataSteps testData;
 
     public void userAddsTaskToTheProject() {
-        task = TestDataGenerator.createTask();
-        var project = (ProjectData) Serenity.sessionVariableCalled("projectData");
+        var task = TestDataGenerator.createTask();
+        var project = testData.getProjectData();
         task.setProjectId(project.getId());
         var response = client.postTasks(task.getName(), task.getProjectId());
         verification.checkTaskDetails(response, task.getName(), task.getProjectId());
         task.setId(response.then().extract().path("id"));
+        testData.setTaskData(task);
     }
 
     public void userChecksTaskDetails() {
+        var task = testData.getTaskData();
         var response = client.getTasks(task.getId());
         verification.checkTaskDetails(response, task.getName(), task.getProjectId());
     }
