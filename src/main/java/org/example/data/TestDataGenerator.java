@@ -3,27 +3,34 @@ package org.example.data;
 import org.example.data.model.ProjectData;
 import org.example.data.model.TaskData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TestDataGenerator {
 
+    private static List<DataGenerator> generators;
+
+    static {
+        generators = new ArrayList<>();
+        generators.add(new RandomData());
+        generators.add(new StaticData());
+    }
+
     public static ProjectData createProject() {
-        var dataType= System.getProperty("data", "static");
-        if (dataType.equals("static")) {
-            return StaticData.getStaticProject();
-        } else if (dataType.equals("random")) {
-            return RandomData.getRandomProject();
-        } else {
-            throw new RuntimeException("Invalid data type");
-        }
+        return getGenerator().getProject();
     }
 
     public static TaskData createTask() {
+        return getGenerator().getTask();
+    }
+
+    private static DataGenerator getGenerator () {
         var dataType= System.getProperty("data", "static");
-        if (dataType.equals("static")) {
-            return StaticData.getStaticTask();
-        } else if (dataType.equals("random")) {
-            return RandomData.getRandomTask();
-        } else {
-            throw new RuntimeException("Invalid data type");
+        for (DataGenerator generator : generators) {
+            if (generator.getType().equals(dataType)) {
+                return generator;
+            }
         }
+        throw new RuntimeException("Invalid data type");
     }
 }
