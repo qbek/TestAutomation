@@ -1,13 +1,24 @@
-package org.example.steps;
+package org.example.steps.project;
 
+import com.google.common.io.Resources;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.response.Response;
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.rest.SerenityRest;
+import org.apache.commons.io.FileUtils;
+import org.eclipse.jetty.util.resource.Resource;
+import org.example.steps.BaseClient;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Map;
 
 import static io.restassured.http.ContentType.JSON;
+import static java.lang.String.format;
 
 public class ProjectClient extends BaseClient {
 
@@ -16,8 +27,21 @@ public class ProjectClient extends BaseClient {
             PROJECTS_BY_ID_PATH = "/projects/{id}";
 
     @Step("Send post project with project name {0}")
-    public Response postProjects(String name) {
-        var payload = String.format("{\"name\": \"%s\"}", name);
+    public Response postProjects(Map<String, String> data) {
+
+        String payload = null;
+        try {
+            payload = Files.readString(Path.of(Resources.getResource("clientB/createProject.json").toURI()));
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        for (var key : data.keySet()) {
+            var searchString = format("{{%s}}", key);
+            var replaceString = data.get(key);
+            payload = payload.replace(searchString, replaceString);
+        }
+
         var request = getBaseRequestSpec()
                 .setContentType(JSON)
                 .setBody(payload).build();

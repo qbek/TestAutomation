@@ -1,10 +1,8 @@
 package org.example;
 import net.serenitybdd.annotations.Steps;
 import net.serenitybdd.annotations.WithTag;
-import net.serenitybdd.junit5.SerenityJUnit5Extension;
-import org.example.steps.ProjectSteps;
+import org.example.steps.project.ProjectSteps;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 
 public class CreateProject extends Base {

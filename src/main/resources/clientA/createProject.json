@@ -1,7 +1,5 @@
 {
   "name": "{{projectName}}",
-  "parent_id": null,
-  "color": "{{projectColor}}",
   "is_favorite": true,
   "view_style": "{{$randomViewStyle}}"
 }

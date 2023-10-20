@@ -1,4 +1,4 @@
-package org.example.steps;
+package org.example.steps.project;
 
 import io.restassured.response.Response;
 import net.serenitybdd.annotations.Step;

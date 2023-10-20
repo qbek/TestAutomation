@@ -2,7 +2,7 @@ package org.example.precondition;
 
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.annotations.Steps;
-import org.example.steps.ProjectSteps;
+import org.example.steps.project.ProjectSteps;
 
 public class ProjectPrecondition {
 

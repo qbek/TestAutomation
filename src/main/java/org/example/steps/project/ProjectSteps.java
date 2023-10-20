@@ -1,11 +1,10 @@
-package org.example.steps;
+package org.example.steps.project;
 
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.annotations.Steps;
-import net.serenitybdd.core.Serenity;
-import net.serenitybdd.rest.SerenityRest;
-import org.example.data.model.ProjectData;
-import org.example.data.model.TaskData;
+import org.example.steps.TestDataSteps;
+
+import java.util.Map;
 
 import static org.example.data.TestDataGenerator.createProject;
 
@@ -24,7 +23,11 @@ public class ProjectSteps {
     public void userCreatesProject() {
         var project = createProject();
         testData.setProjectData(project);
-        var response = client.postProjects(project.getName());
+        var data = Map.of(
+                "projectName", project.getName()
+//                "projectColor", "black"
+        );
+        var response = client.postProjects(data);
         verification.checkProjectDetails(response, project.getName());
         project.setId(response.then().extract().path("id"));
     }

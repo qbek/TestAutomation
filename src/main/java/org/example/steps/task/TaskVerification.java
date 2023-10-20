@@ -1,4 +1,4 @@
-package org.example.steps;
+package org.example.steps.task;
 
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;

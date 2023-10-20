@@ -1,9 +1,10 @@
-package org.example.steps;
+package org.example.steps.task;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
+import org.example.steps.BaseClient;
 
 import static io.restassured.http.ContentType.JSON;
 
