@@ -7,8 +7,8 @@ import org.example.steps.TaskSteps;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(SerenityJUnit5Extension.class)
-public class CreateTask  {
+
+public class CreateTask extends Base {
 
     @Steps
     private ProjectSteps preconditions;

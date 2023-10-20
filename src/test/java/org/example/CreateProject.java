@@ -6,8 +6,8 @@ import org.example.steps.ProjectSteps;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(SerenityJUnit5Extension.class)
-public class CreateProject {
+
+public class CreateProject extends Base {
 
     @Steps
     ProjectSteps steps;
@@ -17,6 +17,11 @@ public class CreateProject {
     public void userCanCreateANewProject() {
         steps.userCreatesProject();
         steps.userCheckProjectDetails();
+    }
+
+    @Test   
+    public void userCanGetAllProjectsList() {
+        steps.userCreatesProject();
         steps.userChecksAllProjectsList();
     }
 

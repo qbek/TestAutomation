@@ -7,7 +7,7 @@ import net.serenitybdd.rest.SerenityRest;
 
 import static io.restassured.http.ContentType.JSON;
 
-public class TasksClient {
+public class TasksClient extends BaseClient {
 
     private static final String
             TASKS_PATH = "/tasks",
@@ -33,14 +33,5 @@ public class TasksClient {
                 .build();
         return SerenityRest.given().spec(request).get(TASKS_PATH);
     }
-
-
-    private RequestSpecBuilder getBaseRequestSpec() {
-        return new RequestSpecBuilder()
-                .addHeader("Authorization", "Bearer d469ce54eca3a7ca5b6b5e7d4c8d51ced8d4c7b1")
-                .setBaseUri("https://api.todoist.com/rest/v2")
-                .log(LogDetail.ALL);
-    }
-
 
 }
