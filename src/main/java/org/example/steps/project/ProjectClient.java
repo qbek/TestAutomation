@@ -1,6 +1,9 @@
 package org.example.steps.project;
 
 import com.google.common.io.Resources;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -41,6 +44,11 @@ public class ProjectClient extends BaseClient {
             var replaceString = data.get(key);
             payload = payload.replace(searchString, replaceString);
         }
+
+        payload = payload.replaceAll("\"?\\{\\{[A-Za-z0-9]+\\}\\}\"?", "null");
+
+        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
+        payload = new GsonBuilder().create().toJson(json);
 
         var request = getBaseRequestSpec()
                 .setContentType(JSON)

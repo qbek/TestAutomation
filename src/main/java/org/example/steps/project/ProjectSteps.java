@@ -24,8 +24,8 @@ public class ProjectSteps {
         var project = createProject();
         testData.setProjectData(project);
         var data = Map.of(
-                "projectName", project.getName()
-//                "projectColor", "black"
+                "projectName", project.getName(),
+                "projectColor", "4"
         );
         var response = client.postProjects(data);
         verification.checkProjectDetails(response, project.getName());
