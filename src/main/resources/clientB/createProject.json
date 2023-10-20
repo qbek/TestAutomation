@@ -1,4 +1,5 @@
 {
   "name": "{{projectName}}",
-  "color": "{{projectColor}}"
+  "color": "{{projectColor}}",
+  "uuid": "{{$guid}}" 
 }

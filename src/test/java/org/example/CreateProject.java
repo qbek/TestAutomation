@@ -17,6 +17,10 @@ public class CreateProject extends Base {
         steps.userCheckProjectDetails();
     }
 
+    public void userCanCreateProjectWithColor() {
+        steps.userCreatesProjectWithColor();
+    }
+
     @Test
     public void userCanGetAllProjectsList() {
         steps.userCreatesProject();

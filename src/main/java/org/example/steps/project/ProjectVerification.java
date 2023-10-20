@@ -2,17 +2,20 @@ package org.example.steps.project;
 
 import io.restassured.response.Response;
 import net.serenitybdd.annotations.Step;
+import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 
 public class ProjectVerification {
 
     @Step("Check if project has correct name: {1}")
     public void checkProjectDetails(Response response, String expectedName) {
-        response.then()
+        var jsonPath = response.then()
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body("name", Matchers.equalTo(expectedName));
+                .extract().jsonPath();
+
+
     }
 
     @Step

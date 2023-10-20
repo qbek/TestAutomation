@@ -13,6 +13,7 @@ import net.serenitybdd.rest.SerenityRest;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jetty.util.resource.Resource;
 import org.example.steps.BaseClient;
+import org.example.templates.TemplateEngine;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -30,26 +31,9 @@ public class ProjectClient extends BaseClient {
             PROJECTS_BY_ID_PATH = "/projects/{id}";
 
     @Step("Send post project with project name {0}")
-    public Response postProjects(Map<String, String> data) {
+    public Response postProjects(Map<String, String> data, String version) {
 
-        String payload = null;
-        try {
-            payload = Files.readString(Path.of(Resources.getResource("clientB/createProject.json").toURI()));
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-
-        for (var key : data.keySet()) {
-            var searchString = format("{{%s}}", key);
-            var replaceString = data.get(key);
-            payload = payload.replace(searchString, replaceString);
-        }
-
-        payload = payload.replaceAll("\"?\\{\\{[A-Za-z0-9]+\\}\\}\"?", "null");
-
-        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
-        payload = new GsonBuilder().create().toJson(json);
-
+        String payload = TemplateEngine.getPayloadFromTemplate(version, "createProject", data);
         var request = getBaseRequestSpec()
                 .setContentType(JSON)
                 .setBody(payload).build();

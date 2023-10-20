@@ -25,12 +25,28 @@ public class ProjectSteps {
         testData.setProjectData(project);
         var data = Map.of(
                 "projectName", project.getName(),
-                "projectColor", "4"
+                "danaNieistniejaca", "aaaa"
         );
-        var response = client.postProjects(data);
+       sendCreateProjectRequest(data);
+    }
+
+    public void userCreatesProjectWithColor() {
+        var project = createProject();
+        testData.setProjectData(project);
+        var data = Map.of(
+                "projectName", project.getName(),
+                "*projectColor", "black"
+        );
+        sendCreateProjectRequest(data);
+    }
+
+    private void sendCreateProjectRequest(Map<String, String> data) {
+        var project = testData.getProjectData();
+        var response = client.postProjects(data, "clientB");
         verification.checkProjectDetails(response, project.getName());
         project.setId(response.then().extract().path("id"));
     }
+
 
     @Step("User checks #projectId project details")
     public void userCheckProjectDetails() {
@@ -45,5 +61,7 @@ public class ProjectSteps {
         var response = client.getProjects();
         verification.checkAllProjectsList(response);
     };
+
+
 
 }
