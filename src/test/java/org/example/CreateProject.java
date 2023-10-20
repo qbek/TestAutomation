@@ -19,7 +19,7 @@ public class CreateProject extends Base {
         steps.userCheckProjectDetails();
     }
 
-    @Test   
+    @Test
     public void userCanGetAllProjectsList() {
         steps.userCreatesProject();
         steps.userChecksAllProjectsList();
